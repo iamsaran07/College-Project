@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 5%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        th {
+            background-color: #3d6ef5ff;
+            color: #fff;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        button[type="button"] {
+            background-color: #3d6ef5ff;
+            color: #f2f2f2;
+            font-weight: bold;
+            padding: 8px 14px;
+            border: none;
+            font-size: 13px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="button"]:hover {
+            background-color: #f2f2f2;
+            color: #3d6ef5ff;
+            font-weight: bold;
+        }
+
+        .btnn {
+    padding: 10px 20px;
+    color: #fff;
+    border: 2px solid #3d6ef5ff;
+    background: #3d6ef5ff;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.4s, color 0.4s;
+    position: absolute;
+    top: 15px;
+    left: 0;
+    margin: 10px;
+    margin-left: 10%; 
+}
+
+.btnn:hover {
+    background: #fff;
+    color: #3d6ef5ff;
+}
+        a {
+            text-decoration: none;
+        }
+
+        th, td {
+            text-align: center;
+            font-weight: bold;
+        }
+        .goback {
+    position: absolute;
+    top: 30px;
+    width: 45px;
+    height: 45px;
+    left: 10%;
+}
+    </style>
+</head>
+<body>
+    {{!-- <a href="/home" class="btnn"> Back<i class="uil uil-image"></i></a> --}}
+    <a href="/home"><img src="https://i.postimg.cc/mD67M56k/back-button.png" alt="Go Back" class="goback"></a>
+
+    <h1>Admin Credentials</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Register</th>
+                <th>Student Details</th>
+                <th>Tution Fees</th>
+                <th>Exam Fees</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Student</td>
+                <td><button type="button" onclick="register()">Register</button></td>
+                <td><button type="button" onclick="studentList()">Details</button></td>
+                <td><button type="button" onclick="feeList()">Details</button></td>
+                <td><button type="button" onclick="examFeeList()">Details</button></td>
+                <td><button type="button" onclick="updateDue()">Update</button></td>
+            </tr>
+            {{!-- <tr>
+                <td>Student Fee Register</td>
+                <div class="button-container">
+                    <td><button type="button" onclick="feeRegister()">Register</button></td>
+                    <td><button type="button" onclick="feeList()">List</button></td>
+                </div>
+            </tr> --}}
+        </tbody>
+    </table>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Action</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+            <tr>
+                <td>Payment Alert</td>
+                <td><button type="button" onclick="paymentAlert()">Alert</button></td>
+            </tr>
+            <tr>
+                <td>Announcement</td>
+                <td><button type="button" onclick="announcement()">Send</button></td>
+            </tr>
+            <tr>
+                <td>Common Announcement</td>
+                <td><button type="button" onclick="commonAnnouncement()">Send</button></td>
+            </tr>
+            <tr>
+                <td>Received Contact Messages</td>
+                <td><button type="button" onclick="messages()">Messages</button></td>
+            </tr>
+            <tr>
+                <td>Send Everyone</td>
+                <td><button type="button" id="sendMail">Send Everyone</button></td>
+            <tr>
+                <td>Upload Image</td>
+                <td><button type="button" onclick="upload()">Image Upload</button></td>
+            </tr>
+            <tr>
+                <td>Gallery</td>
+                <td><button type="button" onclick="gallery()">Gallery</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('sendMail').addEventListener('click', async function() {
+            let response = await fetch('/ssm/mca/sendMail');
+        });
+        document.getElementById('sendMail').addEventListener('click', async function() {
+            alert('Mail sent successfully!');
+        });
+        function register() {
+        window.location.href = '/ssm/mca/register';
+        };
+        function paymentAlert() {
+        window.location.href = '/ssm/mca/paymentAlert';
+        };
+        function studentList() {
+        window.location.href = '/ssm/mca/studentList';
+        };
+        function feeList() {
+        window.location.href = '/ssm/mca/feeList';
+        };
+        function examFeeList() {
+        window.location.href = '/ssm/mca/examFeeList';
+        };
+        function updateDue() {
+        window.location.href = '/ssm/mca/updateDueDatesForAll';
+        };
+        function messages() {
+        window.location.href = '/ssm/mca/messages';
+        };
+        function announcement() {
+        window.location.href = '/ssm/mca/announcement';
+        };
+        function commonAnnouncement() {
+        window.location.href = '/ssm/mca/commonAnnouncement';
+        };
+        function upload() {
+        window.location.href = '/ssm/mca/upload';
+        };
+        function gallery() {
+        window.location.href = '/ssm/mca/gallery';
+        };
+
+    </script>
+</body>
+</html>

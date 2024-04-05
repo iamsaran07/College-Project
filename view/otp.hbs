@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify OTP</title>
+  <link rel="icon" href="https://i.postimg.cc/43g86zdQ/reset-passw-ord.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #3d6ef5ff;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .otp-block {
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      font-size: 18px;
+      border: 2px solid #3d6ef5ff;
+      border-radius: 5px;
+    }
+
+    .otp-block input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      text-align: center;
+      background-color: transparent;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+      width: 48%;
+      background-color: #3d6ef5ff;
+      color: #f2f2f2;
+      font-weight: bold;
+      padding: 8px;
+      border: none;
+      font-size: 13px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover,
+    button[type="button"]:hover {
+      background-color: #f2f2f2;
+      color: #3d6ef5ff;
+      font-weight: bold;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .email {
+      color: #3d6ef5ff;
+      font-weight: bold;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #777;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .resend {
+      color: #3d6ef5ff;
+      cursor: pointer;
+      font-size: 13px;
+      transition: color 0.3s;
+      font-weight: bold;
+
+    }
+
+    .resend:hover {
+      color: #3d6ef5ff;
+    }
+  </style>
+</head>
+<body>
+  <form action="/ssm/mca/otp" method="post">
+    <h2>OTP Verification</h2>
+    <p>OTP has been sent to : <span class="email">{{user.email}}</span></p>
+    <div class="input-group">
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp1" name="otp1" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp2" name="otp2" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp3" name="otp3" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp4" name="otp4" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp5" name="otp5" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+      <div class="otp-block">
+        <input type="text" class="otp-input" id="otp6" name="otp6" autocomplete="off" min="0" max="9" maxlength="1" required>
+      </div>
+    </div>
+    <div class="button-container">
+      <button type="button" onclick="history.back()">Back</button>
+      <button type="submit" id="verifyButton">Verify</button>
+    </div>
+    <p class="note">Didn't receive OTP? <span class="resend" onclick="window.location.href = '/ssm/mca/login'">Resend</span></p>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const otpInputs = document.querySelectorAll('.otp-input');
+      otpInputs.forEach(function(input, index) {
+        input.addEventListener('input', function() {
+          if (input.value.length >= 1) {
+            if (index < otpInputs.length - 1) {
+              otpInputs[index + 1].focus();
+            } else {
+              otpInputs[index].blur();
+            }
+          }
+        });
+        input.addEventListener('keydown', function(event) {
+          if (event.key === 'Backspace' && index > 0 && input.value.length === 0) {
+            otpInputs[index - 1].focus();
+          }
+        });
+      });
+
+      document.querySelector('.resend').addEventListener('click', function() {
+        window.location.reload();
+      });
+    });
+  </script>
+</body>
+</html>
