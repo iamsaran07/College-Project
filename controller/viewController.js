@@ -184,148 +184,156 @@ exports.getStudentDetails = async (req, res) => {
 };
 
 exports.downloadFirstYrTuFeePDF = async (req, res) => {
-    try {
-      const firstYearStudents = await Student.find({ year: 'I', isDelete: false });
-  
-      res.render('firstYearTuitionFeeTemplate', { firstYearStudents }, async (err, html) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error rendering template');
-        }
-  
-        const options = {
-          format: 'A4', 
-        };
-  
-        pdf.create(html, options).toFile('./temp/firstYearFeeList.pdf', (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).send('Error creating PDF');
-          }
-  
-          res.download('./temp/firstYearFeeList.pdf', 'I MCA Tuition Fees Details.pdf', (err) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error downloading PDF');
-            }
-  
-            fs.unlinkSync('./temp/firstYearFeeList.pdf');
-          });
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
+  try {
+    const firstYearStudents = await Student.find({ year: 'I', isDelete: false });
+
+    const templateHTML = await generateTemplate(firstYearStudents);
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(templateHTML);
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+    });
+
+    await browser.close();
+
+    res.contentType("application/pdf");
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 };
+
+async function generateTemplate(firstYearStudents) {
+  return new Promise((resolve, reject) => {
+    res.render('firstYearTuitionFeeTemplate', { firstYearStudents }, (err, html) => {
+      if (err) {
+        console.error(err);
+        reject('Error rendering template');
+      } else {
+        resolve(html);
+      }
+    });
+  });
+}
 
 exports.downloadSecondYrTuFeePDF = async (req, res) => {
-    try {
-      const secondYearStudents = await Student.find({ year: 'II', isDelete: false });
-  
-      res.render('secondYearTuitionFeeTemplate', { secondYearStudents }, async (err, html) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error rendering template');
-        }
-  
-        const options = {
-          format: 'A4', 
-        };
-  
-        pdf.create(html, options).toFile('./temp/firstYearFeeList.pdf', (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).send('Error creating PDF');
-          }
-  
-          res.download('./temp/firstYearFeeList.pdf', 'II MCA Tuition Fees Details.pdf', (err) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error downloading PDF');
-            }
-  
-            fs.unlinkSync('./temp/firstYearFeeList.pdf');
-          });
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
+  try {
+    const secondYearStudents = await Student.find({ year: 'II', isDelete: false });
+
+    const templateHTML = await generateTemplate(secondYearStudents);
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(templateHTML);
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+    });
+
+    await browser.close();
+
+    res.contentType("application/pdf");
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 };
+
+async function generateTemplate(firstYearStudents) {
+  return new Promise((resolve, reject) => {
+    res.render('secondYearTuitionFeeTemplate', { secondYearStudents }, (err, html) => {
+      if (err) {
+        console.error(err);
+        reject('Error rendering template');
+      } else {
+        resolve(html);
+      }
+    });
+  });
+}
 
 exports.downloadFirstYrExFeePDF = async (req, res) => {
-    try {
-      const firstYearStudents = await Student.find({ year: 'I', isDelete: false });
-  
-      res.render('firstYearExamFeeTemplate', { firstYearStudents }, async (err, html) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error rendering template');
-        }
-  
-        const options = {
-          format: 'A4', 
-        };
-  
-        pdf.create(html, options).toFile('./temp/firstYearFeeList.pdf', (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).send('Error creating PDF');
-          }
-  
-          res.download('./temp/firstYearFeeList.pdf', 'I MCA Exam Fees Details.pdf', (err) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error downloading PDF');
-            }
-  
-            fs.unlinkSync('./temp/firstYearFeeList.pdf');
-          });
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
+  try {
+    const firstYearStudents = await Student.find({ year: 'I', isDelete: false });
+
+    const templateHTML = await generateTemplate(firstYearStudents);
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(templateHTML);
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+    });
+
+    await browser.close();
+
+    res.contentType("application/pdf");
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 };
 
+async function generateTemplate(firstYearStudents) {
+  return new Promise((resolve, reject) => {
+    res.render('firstYearExamFeeTemplate', { firstYearStudents }, (err, html) => {
+      if (err) {
+        console.error(err);
+        reject('Error rendering template');
+      } else {
+        resolve(html);
+      }
+    });
+  });
+}
+
 exports.downloadSecondYrExFeePDF = async (req, res) => {
-    try {
-      const secondYearStudents = await Student.find({ year: 'II', isDelete: false });
-  
-      res.render('secondYearExamFeeTemplate', { secondYearStudents }, async (err, html) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error rendering template');
-        }
-  
-        const options = {
-          format: 'A4', 
-        };
-  
-        pdf.create(html, options).toFile('./temp/firstYearFeeList.pdf', (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).send('Error creating PDF');
-          }
-  
-          res.download('./temp/firstYearFeeList.pdf', 'II MCA Exam Fees Details.pdf', (err) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error downloading PDF');
-            }
-  
-            fs.unlinkSync('./temp/firstYearFeeList.pdf');
-          });
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
+  try {
+    const secondYearStudents = await Student.find({ year: 'II', isDelete: false });
+
+    const templateHTML = await generateTemplate(secondYearStudents);
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(templateHTML);
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+    });
+
+    await browser.close();
+
+    res.contentType("application/pdf");
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 };
+
+async function generateTemplate(firstYearStudents) {
+  return new Promise((resolve, reject) => {
+    res.render('secondYearExamFeeTemplate', { secondYearStudents }, (err, html) => {
+      if (err) {
+        console.error(err);
+        reject('Error rendering template');
+      } else {
+        resolve(html);
+      }
+    });
+  });
+}
 
 
 module.exports = exports;
