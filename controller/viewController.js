@@ -246,7 +246,7 @@ exports.downloadSecondYrTuFeePDF = async (req, res) => {
   }
 };
 
-async function generateTemplate(firstYearStudents) {
+async function generateTemplate(secondYearStudents, res) {
   return new Promise((resolve, reject) => {
     res.render('secondYearTuitionFeeTemplate', { secondYearStudents }, (err, html) => {
       if (err) {
@@ -284,7 +284,7 @@ exports.downloadFirstYrExFeePDF = async (req, res) => {
   }
 };
 
-async function generateTemplate(firstYearStudents) {
+async function generateTemplate(firstYearStudents, res) {
   return new Promise((resolve, reject) => {
     res.render('firstYearExamFeeTemplate', { firstYearStudents }, (err, html) => {
       if (err) {
@@ -322,7 +322,7 @@ exports.downloadSecondYrExFeePDF = async (req, res) => {
   }
 };
 
-async function generateTemplate(firstYearStudents) {
+async function generateTemplate(secondYearStudents, res) {
   return new Promise((resolve, reject) => {
     res.render('secondYearExamFeeTemplate', { secondYearStudents }, (err, html) => {
       if (err) {
