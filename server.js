@@ -3,6 +3,7 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
+const mongoose = require('mongoose');
 const app = express();
 require("./config/mongo");
 
@@ -31,6 +32,15 @@ app.get("/studentHome", (req, res) => {
 app.use("/ssm/mca", require("./routes/index"));
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`PORT CONNECTED TO ${PORT}...`);
-});
+
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("CONNECTED TO DATABASE...");
+    app.listen(PORT, () => {
+      console.log(`PORT CONNECTED TO ${PORT}...`);
+    });
+  })
+  .catch((err) => {
+    console.log("FAILED TO CONNECT DATABASE...")
+    console.log(err);
+  });
