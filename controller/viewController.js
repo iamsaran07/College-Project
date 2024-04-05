@@ -9,6 +9,7 @@ const studentFee = require("../models/feesModel");
 const authFile = require("../middleware/auth");
 const Image = require("../models/imageModel");
 const app = express();
+const puppeteer = require('puppeteer');
 const { verify } = require("jsonwebtoken");
 app.use(express.static(path.join(__dirname, "../Images")));
 
